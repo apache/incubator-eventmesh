@@ -15,15 +15,21 @@
  * limitations under the License.
  */
 
+package org.apache.eventmesh.common.stubs;
 
-dependencies {
-    api project(":eventmesh-openconnect:eventmesh-openconnect-java")
-    implementation project(":eventmesh-common")
-    // rabbitmq
-    implementation 'com.rabbitmq:amqp-client:5.22.0'
+import org.apache.eventmesh.common.protocol.http.common.ProtocolKey;
+import org.apache.eventmesh.common.protocol.http.header.Header;
+import org.apache.eventmesh.common.utils.HttpConvertsUtils;
 
-    implementation 'io.cloudevents:cloudevents-json-jackson'
+import java.util.Map;
 
-    compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
+public class HeaderStub extends Header {
+
+    public String code;
+    public String eventmeshenv;
+
+    @Override
+    public Map<String, Object> toMap() {
+        return new HttpConvertsUtils().httpMapConverts(this, new ProtocolKey(), new ProtocolKey.EventMeshInstanceKey());
+    }
 }
